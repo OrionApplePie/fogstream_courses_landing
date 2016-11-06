@@ -5,15 +5,7 @@ from django.http import HttpResponse
 
 
 def index(request):
-    t = get_template('common/index.html')
-    c = Context({})
-    html = t.render(c)
+    template = get_template('index.html')
+    context = Context({})
+    html = template.render(context)
     return HttpResponse(html)
-
-
-def input_form(request):
-    if 'q' in request.GET:
-        message = 'You searched for: %r' % request.GET['q']
-    else:
-        message = 'You submitted an empty form.'
-    return HttpResponse(message)
