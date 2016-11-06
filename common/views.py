@@ -9,3 +9,6 @@ def index(request):
     context = Context({})
     html = template.render(context)
     return HttpResponse(html)
+
+
+ #  this comment created from branch 'feedback'
