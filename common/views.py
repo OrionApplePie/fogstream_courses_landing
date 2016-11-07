@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template.loader import get_template
 from django.template import Context, loader
 from django.http import HttpResponse
-from forms import FeedbackForm
+from .forms import FeedbackForm
 
 
 def index(request):
