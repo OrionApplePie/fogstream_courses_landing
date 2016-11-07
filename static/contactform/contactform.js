@@ -14,7 +14,6 @@ $(document).ready(function() {
 							$("#feedback").bind("click", function(event){
 							    $("#sendmessage").fadeOut();
 							})
-
 						}
 					}).done(function() {
 						$("#load").fadeOut(400);
