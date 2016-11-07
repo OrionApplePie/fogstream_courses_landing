@@ -5,15 +5,6 @@ from django.http import HttpResponse
 from .forms import FeedbackForm
 
 
-def index(request):
-    template = get_template('index.html')
-    context = Context({})
-    html = template.render(context)
-    return HttpResponse(html)
-
-
- #  this comment created from branch 'feedback'
-
 def home(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
