@@ -6,6 +6,7 @@ from .forms import FeedbackForm
 
 from .models import HeadPicture, OurTeam
 
+# вот эти две хуиты исправить в одну
 def index(request):
     HeadPictures = HeadPicture.objects.order_by("priority")
     Team = OurTeam.objects.order_by("id")
