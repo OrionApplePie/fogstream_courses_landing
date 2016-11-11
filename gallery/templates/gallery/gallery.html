@@ -1,0 +1,72 @@
+                                                <section id="section-works" class="section appear clearfix">
+<div class="container">
+
+    <div class="row mar-bot40">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="section-header">
+                <h2 class="section-heading animated" data-animation="bounceInUp">Галлерея</h2>
+                <p>Надо придумать, что написать тут.</p>
+            </div>
+        </div>
+    </div>
+
+            <div class="row">
+              <nav id="filter" class="col-md-12 text-center">
+                <ul>
+                  <li><a href="#" class="current btn-theme btn-small" data-filter="*">Все</a></li>
+                  <li><a href="#"  class="btn-theme btn-small" data-filter=".webdesign" >Занятия</a></li>
+                  <li><a href="#"  class="btn-theme btn-small" data-filter=".photography">Группы</a></li>
+                  <li ><a href="#" class="btn-theme btn-small" data-filter=".print">Что-то</a></li>
+                </ul>
+              </nav>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="portfolio-items isotopeWrapper clearfix" id="3">
+                        {% for photo in img_list %}
+                        {% if photo.photo_album.album_slug == '1' %}
+                        <article class="col-md-4 isotopeItem webdesign">
+                            <div class="portfolio-item">
+                                <span> {{ photo.photo_album.album_title }}</span>
+                                <img src="{{ photo.img.url }}" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Приблизить</a></h5>
+                                        <a href="{{ photo.img.url }}" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+                      {% elif photo.photo_album.album_slug == '2' %}
+                        <article class="col-md-4 isotopeItem photography">
+                            <div class="portfolio-item">
+                                <span> {{ photo.photo_album.album_title }} </span>
+                                <img src="{{ photo.img.url }}" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Приблизить</a></h5>
+                                        <a href="{{ photo.img.url }}" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+                      {% elif photo.photo_album.album_slug == '3' %}
+                        <article class="col-md-4 isotopeItem print">
+                            <div class="portfolio-item">
+                                <span> {{ photo.photo_album.album_title }} </span>
+                                <img src="{{ photo.img.url }}" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Приблизить</a></h5>
+                                        <a href="{{ photo.img.url }}" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                </div>
+            </div>
+</div>
+</section>
