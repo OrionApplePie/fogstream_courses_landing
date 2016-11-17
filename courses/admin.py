@@ -1,5 +1,5 @@
 from django.contrib import admin
-from courses.models import Courses, Party
+from courses.models import Courses
 
 
 class CoursesAdmin(admin.ModelAdmin):
@@ -8,8 +8,5 @@ class CoursesAdmin(admin.ModelAdmin):
 admin.site.register(Courses, CoursesAdmin)
 
 
-class PartyAdmin(admin.ModelAdmin):
-    list_display = ('party_name', 'party_fullname', 'party_login')
-    models = Party
-admin.site.register(Party, PartyAdmin)
+
 
