@@ -27,12 +27,19 @@ SECRET_KEY = 'd#&c8*psjmo8wm3e9*(pv(ej-2n@@1hx)sol8k&a72*8q!ms#%'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+EMAIL_BACKEND ='django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.bk.ru'
+EMAIL_HOST_USER = 'devel.acc@bk.ru'
+EMAIL_HOST_PASSWORD = 'django999'
+EMAIL_PORT = 2525
 
 # Application definition
 
 INSTALLED_APPS = [
     'common.apps.CommonConfig',
+    'coolapp.apps.CoolappConfig',
+    'loginsys',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -105,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
