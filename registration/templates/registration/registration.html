@@ -13,13 +13,17 @@
   <div id="login">
   <div class="flip">
     <div class="form-signup">
-      <h1>Регистрация</h1>
+      <h1>Авторизация</h1>
       <fieldset>
       <p class="login-msg"></p>
-        <form>
-          <input type="email" placeholder="Логин или Email" required />
-          <input type="password" placeholder="Пароль" required />
-          <input type="submit" value="ВОЙТИ" />
+        <form action="registration" method="post">
+        {% csrf_token %}
+          <input type="text" name="email" placeholder="Логин" required />
+          <input type="password" name="password" placeholder="Пароль" required />
+          <input type="submit" id = "enter" value="ВОЙТИ" />
+          {% if login_error %}
+            <label> {{ login_error }}</label>
+          {% endif %}
         </form>
        <!-- <p>Войти через: <span class="social fb">Facebook</span> <span class="social gp">Google +</span></p> -->
         <p><a href="#" class="flipper">Нет аккаунта? Регистрация.</a><br>
@@ -27,7 +31,7 @@
       </fieldset>
     </div>
     <div class="form-login">
-      <h1>Авторизация</h1>
+      <h1>Регистрация</h1>
       <fieldset>
         <form>
           <input type="email" placeholder="Введите Ваш email адрес..." required />

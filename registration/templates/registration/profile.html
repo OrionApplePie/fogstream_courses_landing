@@ -1,0 +1,120 @@
+﻿<html>
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]-->
+    <title>Личный кабинет</title>
+    <!-- BOOTSTRAP STYLE SHEET -->
+    <link href="{% static 'css/bootstrapP.css' %}" rel="stylesheet" />
+    <!-- FONT-AWESOME STYLE SHEET FOR BEAUTIFUL ICONS -->
+    <link href="{% static 'css/font-awesomeP.css' %}" rel="stylesheet" />
+     <!-- CUSTOM STYLE CSS -->
+    <style type="text/css">
+               .btn-social {
+            color: white;
+            opacity: 0.8;
+        }
+
+            .btn-social:hover {
+                color: white;
+                opacity: 1;
+                text-decoration: none;
+            }
+
+        .btn-facebook {
+            background-color: #3b5998;
+        }
+
+        .btn-twitter {
+            background-color: #00aced;
+        }
+
+        .btn-linkedin {
+            background-color: #0e76a8;
+        }
+
+        .btn-google {
+            background-color: #c32f10;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Назад</a>
+            </div>
+           <!-- <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav ">
+                    <li><a href="#">Выйти</a></li>
+                </ul>
+            </div>-->
+        </div>
+    </div>
+    <!-- NAVBAR CODE END -->
+
+
+    <div class="container">
+        <section style="padding-bottom: 50px; padding-top: 50px;">
+            <form action="profile" method="post">{% csrf_token %}
+            <div class="row">
+                <div class="col-md-4">
+                        <img src="assets/img/250x250.png" class="img-rounded img-responsive" />
+                        <br />
+                        <br />
+                        <label>Фамилия</label>
+                        <input type="text" name = "first_name" class="form-control" placeholder="{{ auth.first_name }}">
+                        <label>Имя</label>
+                        <input type="text" name = "last_name" class="form-control" placeholder="{{ auth.last_name }}">
+                        <label>Email</label>
+                        <input type="text" name="email" class="form-control" placeholder="{{ auth.email }}">
+                        <!--<label>Телефон</label>
+                        <input type="text" class="form-control" placeholder="{{ person.party_phone }}"> -->
+                        <br>
+                        <!--<input type="submit" class="btn btn-success" value="Сохранить изменения">-->
+                        <br /><br/>
+
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group col-md-8">
+                            <h3>Изменить пароль</h3>
+                            <br />
+                            <label>Введите старый пароль</label>
+                            <input type="password" name="old_password" class="form-control">
+                            <label>Введите новый пароль</label>
+                            <input type="password" name="password1" class="form-control">
+                            <label>Введите новый пароль еще раз</label>
+                            <input type="password" name="password2" class="form-control" />
+                            <br>
+                            <input type="submit" class="btn btn-warning" value="Сохранить">
+                    </div>
+                </div>
+                {% if login_error %}
+                    <label> {{ login_error }} </label>
+                {% endif %}
+            </div>
+            <!-- ROW END -->
+            </form>
+        </section>
+        <!-- SECTION END -->
+    </div>
+    <!-- CONATINER END -->
+
+    <!-- REQUIRED SCRIPTS FILES -->
+    <!-- CORE JQUERY FILE -->
+    <script src="{% static 'js/jquery-1.11.1P.js' %}"></script>
+    <!-- REQUIRED BOOTSTRAP SCRIPTS -->
+    <script src="{% static 'js/bootstrapP.js' %}"></script>
+</body>
+
+</html>
