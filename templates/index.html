@@ -39,7 +39,7 @@
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-						<li class="active"><a href="{% static index.html %}">Home</a></li>
+						<li class="active"><a href="/">Home</a></li>
 						<li><a href="#section-about">About</a></li>
 						<li><a href="#section-works">Portfolio</a></li>
 						<li><a href="#section-contact">Contact</a></li>
@@ -350,6 +350,7 @@
 		</section>
 
 		<!-- contact -->
+
 		<section id="section-contact" class="section appear clearfix">
 			<div class="container">
 
@@ -368,7 +369,7 @@
 								 Your message has been sent. Thank you!
 							</div>
                             <div id="errormessage"></div>
-							<form id="feedback" action=""  name="feedback" method="post" role="form" class="contactForm">
+							<form  novalidate id="feedback" action=""  name="feedback" method="post" role="form" class="contactForm">
 								{{ form.non_field_errors }}
 								{% for field in form %}
 								<div class="form-group">
@@ -378,7 +379,7 @@
 							  </div>
 								{% endfor %}
 								{% csrf_token %}
-							  <button type="submit" class="btn btn-theme pull-left">SEND MESSAGE</button>
+							  <button type="submit" class="btn btn-theme pull-left">ОТПРАВИТЬ</button>
 							</form>
 							<img id="load" src="{% static 'load.gif' %}" style="display: none;" />
 							<div id="answer"></div>

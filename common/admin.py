@@ -1,26 +1,19 @@
 from django.contrib import admin
-from .models import Feedback
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
 from django.core.mail import EmailMessage
-from django.contrib import messages
 
-
-def send_answer(adminmodel, request, queryset):
-    for contact in queryset:
-        if contact.answer:
-            send_mail('Ответ', [contact.answer], 'from@example.com', [contact.email], fail_silently=False)
-        adminmodel.message_user(request, "Mail sent successfully ")
-    send_answer.short_description = "Послать e-mail выбранным контактам"
+from .models import Feedback
 
 
 class FeedbackModelAdmin(admin.ModelAdmin):
-    list_display = ["__str__", "email", "subject", "timestamp"]
-    list_filter = ["subject", "timestamp"]
-    search_fields = ["subject", "message"]
-    actions = [send_answer]
+    """
+    Class for list of feedback questions
+    """
+    list_display = ("__str__", "email", "subject", "timestamp", "is_reply")
+    list_filter = ("subject", "timestamp")
+    search_fields = ("subject", "message")
 
     class Meta:
         model = Feedback
@@ -29,12 +22,14 @@ class FeedbackModelAdmin(admin.ModelAdmin):
     change_form_template = 'common/change_form.html'
 
     def response_change(self, request, obj):
+        """
+        Function for sending answer
+        """
         opts = self.model._meta
         pk_value = obj._get_pk_val()
         preserved_filters = self.get_preserved_filters(request)
 
         if "_send_answer" in request.POST:
-            # handle the action on your obj
             contact_name = request.POST.get('name', '')
             contact_mail = request.POST.get('email', '')
             email = EmailMessage(
@@ -48,7 +43,7 @@ class FeedbackModelAdmin(admin.ModelAdmin):
             email.send()
             obj.is_reply = True
             obj.save()
-            self.message_user(request, "Answer is sended")
+            self.message_user(request, "Ответ отослан")
             redirect_url = reverse('admin:%s_%s_change' %
                                (opts.app_label, opts.model_name),
                                args=(pk_value,),
