@@ -24,8 +24,7 @@ class Feedback(models.Model):
 
     def __str__(self):
         return self.name
-'''test'''
-# Create your models here.
+
 
 class HeadPicture(models.Model):
     title = models.CharField(max_length=255, null=True)

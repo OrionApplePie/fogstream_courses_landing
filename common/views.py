@@ -7,22 +7,19 @@ from .forms import FeedbackForm
 
 from .models import HeadPicture, OurTeam
 
-# вот эти две хуиты исправить в одну
-def index(request):
-    HeadPictures = HeadPicture.objects.order_by("priority")
-    Team = OurTeam.objects.order_by("id")
-    context = {'HeadPictures': HeadPictures, 'Team': Team}
-    return render(request, 'common/index.html', context)
 
-
- #  this comment created from branch 'feedback'
+#  this comment created from branch 'feedback'
 
 def index(request):
     """
     Main view for index page
     """
+    context = {}
+    HeadPictures = HeadPicture.objects.order_by("priority")
+    Team = OurTeam.objects.order_by("id")
+    context.update({'HeadPictures': HeadPictures, 'Team': Team})
     form = FeedbackForm()
-    context = {'form': form, 'username': auth.get_user(request).username}
+    context.update({'form': form, 'username': auth.get_user(request).username})
     return render(request, 'index.html', context)
 
 
