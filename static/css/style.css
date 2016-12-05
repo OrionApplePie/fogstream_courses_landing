@@ -762,6 +762,12 @@ nav#filter a {
 	font-size:13px;
 }
 
+.validation_error {
+    color: red;
+	font-weight: bold;
+	font-size: 100%;
+}
+
 #sendmessage {
 	border:1px solid #fff;
 	display:none;
