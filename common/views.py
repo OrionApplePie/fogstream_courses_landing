@@ -32,6 +32,7 @@ def contact(request):
         form = FeedbackForm(data=request.POST)
         if form.is_valid():
             form.save()
+            contact_name = request.POST.get('name', '')
             contact_mail = request.POST.get('email', '')
             email = EmailMessage(
                 "Курсы Python/Django",

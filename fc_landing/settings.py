@@ -27,15 +27,14 @@ SECRET_KEY = 'd#&c8*psjmo8wm3e9*(pv(ej-2n@@1hx)sol8k&a72*8q!ms#%'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 2525
 
 # Application definition
 
 INSTALLED_APPS = [
-    'registration',
-    'courses',
-    'gallery',
-    'common.apps.CommonConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'common',
     'loginsys',
+    'registration',
+    'courses',
+    'gallery',
 
 ]
 
@@ -55,7 +57,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 ]
 
 ROOT_URLCONF = 'fc_landing.urls'
