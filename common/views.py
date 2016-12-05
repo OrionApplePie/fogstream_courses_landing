@@ -10,19 +10,14 @@ def index(request):
     """
     Main view for index page
     """
-    if request.method == 'POST':
-        form = FeedbackForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return render(request, 'index.html', {'form': form})
-    else:
-        form = FeedbackForm()
-    return render(request, 'index.html', {'form': form, 'username': auth.get_user(request).username})
+    form = FeedbackForm()
+    context = {'form': form, 'username': auth.get_user(request).username}
+    return render(request, 'index.html', context)
 
 
 def contact(request):
     """
-    View for FeedBack form, used in AJAX script /contactform/contactform.js
+    View for Feedback form, used in AJAX script /contactform/contactform.js
 
     """
     if request.method == 'POST':
@@ -53,5 +48,5 @@ def contact(request):
                     'message': 'Form invalid!',
                     }
             return JsonResponse(data)
-    return redirect('/')
+    return redirect('/') # if just go to www.host.com/contact without form
 
