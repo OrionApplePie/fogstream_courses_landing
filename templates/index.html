@@ -350,46 +350,8 @@
 		</section>
 
 		<!-- contact -->
+		{% include "feedback.html" %}
 
-		<section id="section-contact" class="section appear clearfix">
-			<div class="container">
-
-				<div class="row mar-bot40">
-					<div class="col-md-offset-3 col-md-6">
-						<div class="section-header">
-							<h2 class="section-heading animated" data-animation="bounceInUp">Contact us</h2>
-							<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur, adipisci velit, sed quia non numquam.</p>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<div class="cform" id="contact-form">
-							<div id="sendmessage">
-								 Your message has been sent. Thank you!
-							</div>
-                            <div id="errormessage"></div>
-							<form  novalidate id="feedback" action=""  name="feedback" method="post" role="form" class="contactForm">
-								{{ form.non_field_errors }}
-								{% for field in form %}
-								<div class="form-group">
-								   {{ field.error }}
-								   {{ field.label_tag }} {{ field }}
-									<div class="validation"></div>
-							  </div>
-								{% endfor %}
-								{% csrf_token %}
-							  <button type="submit" class="btn btn-theme pull-left">ОТПРАВИТЬ</button>
-							</form>
-							<img id="load" src="{% static 'load.gif' %}" style="display: none;" />
-							<div id="answer"></div>
-						</div>
-					</div>
-					<!-- ./span12 -->
-				</div>
-
-			</div>
-		</section>
 		<!-- map -->
 		<section id="section-map" class="clearfix">
             <div id="google-map" data-latitude="40.713732" data-longitude="-74.0092704"></div>
