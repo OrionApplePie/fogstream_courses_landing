@@ -36,7 +36,7 @@ def contact(request):
             contact_mail = request.POST.get('email', '')
             email = EmailMessage(
                 "Курсы Python/Django",
-                "Ваше сообщение отправлено, Спасибо!",
+                "Ваше с1ообщение отправлено, Спасибо!",
                 "from@example.com",
                 [contact_mail],
                 reply_to=['example@example.ru'],

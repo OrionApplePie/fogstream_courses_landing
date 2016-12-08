@@ -41,12 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'common',
     'loginsys',
     'registration',
     'courses',
     'gallery',
-
 ]
 
 MIDDLEWARE = [
@@ -86,9 +86,9 @@ WSGI_APPLICATION = 'fc_landing.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mydb',
-        'USER': 'postgres',
-        'PASSWORD': '4657',
+        'NAME': 'fc_landing',
+        'USER': 'alister',
+        'PASSWORD': 'alister',
         'HOST': 'localhost',
         'PORT': '5432',
     }
