@@ -3,7 +3,7 @@ import random
 from .models import Photo, Album
 
 
-def photo_list(request):
+def photo_list():
     queryset_photo = Photo.objects.all()
     queryset_album = Album.objects.all()
     if len(list(queryset_photo)) < 9:

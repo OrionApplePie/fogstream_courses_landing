@@ -20,7 +20,7 @@ def index(request):
     form = FeedbackForm()
 
     context.update({'form': form, 'username': auth.get_user(request).username})
-    context.update(photo_list(request))
+    context.update(photo_list())
     return render(request, 'index.html', context)
 
 
