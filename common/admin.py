@@ -5,6 +5,7 @@ from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
 from django.core.mail import EmailMessage
 
 from .models import HeadPicture, OurTeam
+
 from .models import Feedback
 
 

@@ -8,8 +8,6 @@ from .forms import FeedbackForm
 from .models import HeadPicture, OurTeam
 
 
-#  this comment created from branch 'feedback'
-
 def index(request):
     """
     Main view for index page
@@ -18,7 +16,9 @@ def index(request):
     HeadPictures = HeadPicture.objects.order_by("priority")
     Team = OurTeam.objects.order_by("id")
     context.update({'HeadPictures': HeadPictures, 'Team': Team})
+
     form = FeedbackForm()
+
     context.update({'form': form, 'username': auth.get_user(request).username})
     return render(request, 'index.html', context)
 
@@ -57,5 +57,5 @@ def contact(request):
                     'message': 'Form invalid!',
                     }
             return JsonResponse(data)
-    return redirect('/') # if just go to www.host.com/contact without form
+    return redirect('/')  # if just go to www.host.com/contact without form
 

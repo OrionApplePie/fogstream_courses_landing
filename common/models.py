@@ -2,7 +2,8 @@ from django.db import models
 from django.core import validators
 
 
-max_len_validate = validators.MaxLengthValidator(32);
+max_len_validate = validators.MaxLengthValidator(32)
+
 
 class Feedback(models.Model):
     """
