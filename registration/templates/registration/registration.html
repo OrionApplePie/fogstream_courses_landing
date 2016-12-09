@@ -9,28 +9,9 @@
 </head>
 
 <body>
-
-  <div id="login">
-  <div class="flip">
+    <div id="login">
+      <div class="flip">
     <div class="form-signup">
-      <h1>Авторизация</h1>
-      <fieldset>
-      <p class="login-msg"></p>
-        <form action="registration" method="post">
-        {% csrf_token %}
-          <input type="text" name="email" placeholder="Логин" required />
-          <input type="password" name="password" placeholder="Пароль" required />
-          <input type="submit" id = "enter" value="ВОЙТИ" />
-          {% if login_error %}
-            <label> {{ login_error }}</label>
-          {% endif %}
-        </form>
-       <!-- <p>Войти через: <span class="social fb">Facebook</span> <span class="social gp">Google +</span></p> -->
-        <p><a href="#" class="flipper">Нет аккаунта? Регистрация.</a><br>
-        <a href="#">Забыли пароль?</a></p>
-      </fieldset>
-    </div>
-    <div class="form-login">
       <h1>Регистрация</h1>
       <fieldset>
         <form>
@@ -44,14 +25,13 @@
           <input type="submit" value="Зарегистрироваться" />
         </form>
        <!-- <p>Войти через: <span class="social fb">Facebook</span> <span class="social gp">Google +</span></p> -->
-        <a href="#" class="flipper">Уже зарегистрированы? Войти.</a>
+        <a href="/auth/login/">Уже зарегистрированы? Войти.</a>
       </fieldset>
     </div>
   </div>
 </div>
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-  <script src="{% static 'js/indexR.js' %}"></script>
 
 </body>
 </html>

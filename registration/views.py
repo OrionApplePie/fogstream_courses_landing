@@ -1,28 +1,35 @@
-from django.shortcuts import render_to_response, redirect, render
+from django.shortcuts import redirect, render
 from courses.models import Courses
 from django.contrib import auth
 from django.contrib.auth.models import User
 
 
-def registration(request):
+def login(request):
     queryset = Courses.objects.all()
     context = {
         'courses': queryset,
         'auth': auth.get_user(request)
     }
     if request.POST:
-        email = request.POST.get('email', '')
+        username = request.POST.get('login', '')
         password = request.POST.get('password', '')
-        user = auth.authenticate(username=email, password=password)
+        user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            # render(request, 'registration/registration.html')
             return redirect('/')
         else:
             context['login_error'] = "Пользователь не найден"
-            return render(request, 'registration/registration.html', context)
+            return render(request, 'registration/login.html', context)
     else:
-        return render(request, 'registration/registration.html', context)
+        return render(request, 'registration/login.html', context)
+
+
+def registration(request):
+    queryset = Courses.objects.all()
+    context = {
+        'courses': queryset,
+    }
+    return render(request, 'registration/registration.html', context)
 
 
 def profile(request):
@@ -59,6 +66,7 @@ def profile(request):
     else:
         return render(request, 'registration/profile.html', context)
 
-def out(request):
+
+def logout(request):
     auth.logout(request)
     return redirect('/')

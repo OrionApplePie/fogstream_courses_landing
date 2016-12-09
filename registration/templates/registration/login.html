@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Вход</title>
+	<link rel="stylesheet" href="{% static 'css/styleR.css' %}" media="screen" type="text/css" />
+	<link rel="icon" href="http://vladmaxi.net/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="http://vladmaxi.net/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+  <div id="login">
+  <div class="flip">
+    <div class="form-signup">
+      <h1>Авторизация</h1>
+      <fieldset>
+      <p class="login-msg"></p>
+        <form action="auth/login" method="post">
+        {% csrf_token %}
+          <input type="text" name="login" placeholder="Логин" required />
+          <input type="password" name="password" placeholder="Пароль" required />
+          <input type="submit" id = "enter" value="ВОЙТИ" />
+          {% if login_error %}
+            <label> {{ login_error }}</label>
+          {% endif %}
+        </form>
+       <!-- <p>Войти через: <span class="social fb">Facebook</span> <span class="social gp">Google +</span></p> -->
+        <p><a href="/auth/registration/">Нет аккаунта? Регистрация.</a><br>
+        <a href="/auth/password/reset/">Забыли пароль?</a></p>
+      </fieldset>
+    </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  </div>
+  </div>
+</body>
+</html>
