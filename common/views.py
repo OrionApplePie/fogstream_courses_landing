@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.http import JsonResponse
 
 from .forms import FeedbackForm
-
+from gallery.views import photo_list
 from .models import HeadPicture, OurTeam
 
 
@@ -20,6 +20,7 @@ def index(request):
     form = FeedbackForm()
 
     context.update({'form': form, 'username': auth.get_user(request).username})
+    context.update(photo_list(request))
     return render(request, 'index.html', context)
 
 
