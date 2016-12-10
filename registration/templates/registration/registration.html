@@ -14,24 +14,15 @@
     <div class="form-signup">
       <h1>Регистрация</h1>
       <fieldset>
-        <form>
-          <input type="email" placeholder="Введите Ваш email адрес..." required />
-          <select class="list_courses" name = 'Выберите курс'>
-              <option selected value="opt1">Выберите курс</option>
-            {% for course in courses%}
-              <option>{{ course.courses_name_course }}</option>
-            {% endfor %}
-          </select>
-          <input type="submit" value="Зарегистрироваться" />
+        <form action="send_registration_email" method="post">
+          {% csrf_token %}
+          <input type="email" name = 'email' placeholder="Введите Ваш email адрес..." required />
+          <input type="submit" value="Начать регистрацию" />
         </form>
-       <!-- <p>Войти через: <span class="social fb">Facebook</span> <span class="social gp">Google +</span></p> -->
         <a href="/auth/login/">Уже зарегистрированы? Войти.</a>
       </fieldset>
     </div>
   </div>
 </div>
-
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-
 </body>
 </html>
