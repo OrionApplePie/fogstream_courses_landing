@@ -1,0 +1,40 @@
+{% load staticfiles %}
+
+<section id = "section-home" class="featured">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="carousel slide" id="HeadCarousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+								<div class="bannerImage">
+									<a href="#"><img src="{{HeadPictures.0.image.url}}" alt="картинка пропала" width=1400 height=405></a>
+								</div>
+								<div class="caption row-fluid">
+									<div class="span4"></div>
+									<div class="span8"></div>
+								</div>
+							</div>
+							{% for pic in HeadPictures %}
+								{% if pic.priority > 1 %}
+                            	<div class="item">
+                                    	<div class="bannerImage">
+                                        	<a href="#"><img src="{{pic.image.url}}" alt="картинка пропала" width=1400 height=405></a>
+                                    	</div>
+                                    	<div class="caption row-fluid">
+                                    	    <div class="span4"></div>
+                                    	    <div class="span8"></div>
+                                    	</div>
+	                            </div>
+								{% endif %}
+							{% endfor %}
+                        </div>
+                        <div class="control-box">
+							<a data-slide="prev" href="#HeadCarousel" class="carousel-control left"><img src = "{% static 'img/head/controls/left.png' %}" ></a>
+							<a data-slide="next" href="#HeadCarousel" class="carousel-control right"><img src = "{% static 'img/head/controls/right.png' %}"  ></a>
+						</div>
+                    </div>
+				</div>
+			</div>
+		</div>
+ </section>
