@@ -813,7 +813,7 @@ nav#filter a {
 }
 #contact-form input[type=text],#contact-form input[type=email] {
 	height: 60px;
-	margin-bottom:30px;
+	margin-bottom: 1px;
 }
 #contact-form input[type=submit] {
 	color: #fff;
@@ -901,8 +901,7 @@ section#footer {
 }
 
 section#footer .copyright {
-	text-align: center;
-}
+ }
 
 /* footer social icons */
 ul.social-network {
