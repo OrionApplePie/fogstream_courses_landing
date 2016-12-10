@@ -103,10 +103,18 @@ def registration(request):
     return render(request, 'registration/registration.html', context)
 
 
+def password_authentication(password):
+    if not password.isdigit() and not password.isalpha():
+        return True
+    else:
+        return False
+
+
 def profile(request):
-    text = ''
+    fail = False
     context = {
-        'auth': auth.get_user(request)
+        'auth': auth.get_user(request),
+        'error': '',
     }
     if request.POST:
         user = auth.get_user(request)
@@ -116,23 +124,36 @@ def profile(request):
         old_password = request.POST.get('old_password', '')
         password1 = request.POST.get('password1', '')
         password2 = request.POST.get('password2', '')
-        if first_name != '':
+        username = request.POST.get('login', '')
+        if username:
+            user.username = username
+        if first_name:
             user.first_name = first_name
-            user.save()
-        if last_name != '':
+        if last_name:
             user.last_name = last_name
-            user.save()
-        if email != '':
+        if email:
             user.email = email
-            user.save()
-        if old_password != '' and password1 != '' and password2 != '':
-            if user.check_password(old_password) and password1 == password2:
+        if old_password and password1 and password2:
+            if not user.check_password(old_password):
+                fail = True
+                context['error'] = 'Старый пароль неверный'
+
+            if password1 != password2:
+                fail = True
+                context['error'] = 'Новые пароли не совпадают'
+            if len(password2) < 8:
+                fail = True
+                context['error'] = 'Пароль должен состоять из восьми и более символов'
+            if password_authentication(password1) == False:
+                fail = True
+                context['error'] = 'Пароль должен состоять из цифр и букв'
+            if user.check_password(old_password) and password1 == password2 and len(
+                    password2) >= 8 and password_authentication(password1):
                 user.set_password(password1)
-                user.save()
-                context['login_error'] = 'save'
-            else:
-                context['login_error'] = "старый пароль неверный или новые пароли не совпадают"
-        context['login_error'] = 'save'
+                auth.login(request, user)
+        user.save()
+        if not fail:
+            context['error'] = 'Сохранено'
         return render(request, 'registration/profile.html', context)
     else:
         return render(request, 'registration/profile.html', context)
