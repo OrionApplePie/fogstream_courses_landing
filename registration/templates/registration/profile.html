@@ -69,26 +69,23 @@
             <form action="profile" method="post">{% csrf_token %}
             <div class="row">
                 <div class="col-md-4">
-                        <img src="assets/img/250x250.png" class="img-rounded img-responsive" />
-                        <br />
-                        <br />
+                    <br/>
+                        <label>Логин</label>
+                        <input type="text" name = "login" class="form-control" >
                         <label>Фамилия</label>
-                        <input type="text" name = "first_name" class="form-control" placeholder="{{ auth.first_name }}">
+                        <input type="text" name = "first_name" class="form-control" >
                         <label>Имя</label>
-                        <input type="text" name = "last_name" class="form-control" placeholder="{{ auth.last_name }}">
+                        <input type="text" name = "last_name" class="form-control">
                         <label>Email</label>
-                        <input type="text" name="email" class="form-control" placeholder="{{ auth.email }}">
+                        <input type="text" name="email" class="form-control" >
                         <!--<label>Телефон</label>
                         <input type="text" class="form-control" placeholder="{{ person.party_phone }}"> -->
-                        <br>
                         <!--<input type="submit" class="btn btn-success" value="Сохранить изменения">-->
-                        <br /><br/>
-
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <div class="form-group col-md-8">
                             <h3>Изменить пароль</h3>
-                            <br />
+
                             <label>Введите старый пароль</label>
                             <input type="password" name="old_password" class="form-control">
                             <label>Введите новый пароль</label>
@@ -99,13 +96,15 @@
                             <input type="submit" class="btn btn-warning" value="Сохранить">
                     </div>
                 </div>
-                {% if login_error %}
-                    <label> {{ login_error }} </label>
-                {% endif %}
             </div>
             <!-- ROW END -->
             </form>
+            {% if error %}
+                <div class="bg-info"> {{ error}} </div>
+            {% endif %}
+        <br/>
         </section>
+
         <!-- SECTION END -->
     </div>
     <!-- CONATINER END -->
