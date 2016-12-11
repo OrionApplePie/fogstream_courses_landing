@@ -3,9 +3,10 @@ from django.core.mail import EmailMessage
 from django.contrib import auth
 from django.http import JsonResponse
 
+from common.models import HeadCarouselPicture, TeamMember
 from .forms import FeedbackForm
 from gallery.views import photo_list
-from .models import HeadPicture, OurTeam
+
 
 
 def index(request):
@@ -13,9 +14,9 @@ def index(request):
     Main view for index page
     """
     context = {}
-    HeadPictures = HeadPicture.objects.order_by("priority")
-    Team = OurTeam.objects.order_by("id")
-    context.update({'HeadPictures': HeadPictures, 'Team': Team})
+    head_pictures = HeadCarouselPicture.objects.order_by("priority")
+    team = TeamMember.objects.order_by("id")
+    context.update({'head_pictures': head_pictures, 'team': team})
 
     form = FeedbackForm()
 
