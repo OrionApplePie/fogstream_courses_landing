@@ -76,6 +76,10 @@ def registration_confirm(request, activation_key):
 
 
 def login(request):
+    """
+    Функция авторизации пользователя
+
+    """
     queryset = Courses.objects.all()
     context = {
         'courses': queryset,
@@ -104,6 +108,11 @@ def registration(request):
 
 
 def password_authentication(password):
+    """
+    Функция проверки пороля(состоит ли он и из цифр и из букв)
+    :param password: пароль для проверки
+    :return:True - если пароль соответствует требованиям, False - в противном случае
+    """
     if not password.isdigit() and not password.isalpha():
         return True
     else:
@@ -111,6 +120,10 @@ def password_authentication(password):
 
 
 def profile(request):
+    """
+    Функция изменения данныхв личном кабинете
+
+    """
     fail = False
     context = {
         'auth': auth.get_user(request),
@@ -160,5 +173,10 @@ def profile(request):
 
 
 def logout(request):
+
+    """
+    Функция выхода
+
+    """
     auth.logout(request)
     return redirect('/')
