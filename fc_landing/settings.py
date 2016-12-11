@@ -26,10 +26,16 @@ SECRET_KEY = 'd#&c8*psjmo8wm3e9*(pv(ej-2n@@1hx)sol8k&a72*8q!ms#%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 2525
+CCOUNT_ACTIVATION_DAYS = 2 # кол-во дней для хранения кода активации
+
+AUTH_USER_EMAIL_UNIQUE = True
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'info@google.ru'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
 
@@ -48,7 +54,7 @@ INSTALLED_APPS = [
     'gallery',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -86,8 +92,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'fc_landing',
-        'USER': 'alister',
-        'PASSWORD': 'alister',
+        'USER': 'postgres',
+        'PASSWORD': '4657',
         'HOST': 'localhost',
         'PORT': '5432',
     }

@@ -1,0 +1,9 @@
+
+{% block content %}
+{% load staticfiles %}
+<h1>Ссылка истекла</h1>
+К сожалению, Ваша ссылка истекла. Мы можем попробовать направить Вам новую, если Вы нажмете на кнопочку <br/><br/>
+<form action="/auth/registration/">
+    <input type="submit" value="Кнопочка" />
+</form>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Регистрация/Вход</title>
+	<link rel="stylesheet" href="{% static 'css/styleR.css' %}" media="screen" type="text/css" />
+	<link rel="icon" href="http://vladmaxi.net/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="http://vladmaxi.net/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div id="login">
+      <div class="flip">
+        <div class="form-signup">
+          <h1>Продолжение регистрации</h1>
+          <fieldset>
+              {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+              {% endfor %}
+            <form action="registration_continue" method="post">
+              {% csrf_token %}
+              <input type="text" name = 'username' placeholder="Введите логин..." required />
+              <input type="password" name = 'password' placeholder="Введите пароль..." required />
+              <input type="password" name = 'password_confirm' placeholder="Подтвердите пароль..." required />
+              <select class="list_courses" name = 'course'>
+                <option selected value="">Выберите курс</option>
+                 {% for course in courses%}
+                <option>{{ course.courses_name_course }}</option>
+                 {% endfor %}
+              </select>
+              <input type="submit" value="Зарегистрироваться" />
+            </form>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

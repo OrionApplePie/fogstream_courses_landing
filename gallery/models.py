@@ -2,21 +2,21 @@ from django.db import models
 
 
 class Album(models.Model):
-    album_title = models.CharField(max_length=100, verbose_name='Название')
-    album_slug = models.SlugField(max_length=100, unique=True, verbose_name='Описание')
+    title = models.CharField(max_length=100, verbose_name='Название')
+    slug = models.SlugField(max_length=100, unique=True, verbose_name='Описание')
 
     class Meta:
-        ordering = ['album_title']
+        ordering = ['title']
         verbose_name = 'Альбом'
         verbose_name_plural = 'Альбомы'
 
     def __unicode__(self):
-        return self.album_title
+        return self.title
 
 
 class Photo(models.Model):
-    photo_title = models.CharField(max_length=200, verbose_name='Название')
-    photo_album = models.ForeignKey(Album, verbose_name='Альбом')
+    title = models.CharField(max_length=200, verbose_name='Название')
+    album = models.ForeignKey(Album, verbose_name='Альбом')
     img = models.ImageField('Photo', upload_to='images')
 
     def image_img(self):
@@ -27,9 +27,9 @@ class Photo(models.Model):
     image_img.allow_tags = True
 
     class Meta:
-        ordering = ['photo_title']
+        ordering = ['title']
         verbose_name = 'Фото'
         verbose_name_plural = 'Фотографии'
 
     def __unicode__(self):
-        return self.photo_title
+        return self.title

@@ -338,7 +338,7 @@ section.section {
  --- Parallax ---
 ============================= */
 
-#parallax1{	
+#parallax1{
 	background-image: url(../img/parallax/img1.jpg);
 }
 #parallax2{	
@@ -347,6 +347,7 @@ section.section {
 #testimonials{	
 	background-image: url(../img/parallax/img3.jpg);
 }
+
 /*===========================
   --- Header & menu ----
 =========================== */
@@ -431,14 +432,12 @@ h1 a.navbar-brand {
 	margin-top: -5px !important;
 }
 
-
-
 /*===========================
   --- Featured section ----
 =========================== */
 
 section.featured {
-	padding: 200px 0 60px;
+	padding: 150px 0 50px;
 	background: #70B9B0;
 	color: #fdfdfd;
 }
@@ -448,14 +447,14 @@ section.featured h2.slogan {
 	font-size: 48px;
 	font-weight: 900;
 }
-  
+
  /* inner heading */
 section.featured.inner {
 	background: #eee;
 	padding: 150px 0 50px;
 }
-  
-  
+
+
 /* --- Flexslider --- */
 .flexslider {
 	margin: 0;
@@ -558,7 +557,7 @@ section.featured.inner {
 
 .tp-bullets.simplebullets.round .bullet {
 	background: url(../img/bullets-new.png) no-repeat top left;
-}  
+}
 
 .tp-caption.large_bold_white {
 	font-size:60px;
@@ -600,23 +599,24 @@ section.featured.inner {
 About
 =========================== */
 
+.team-member {
+    display: inline;
+    display:inline-block;
+}
+
 .member-photo {
-	box-sizing:border-box;
 	-webkit-border-radius:50%;
 		-moz-border-radius:50%;
-			border-radius:50%;	
+			border-radius:50%;
 	margin: 0 0 20px 0;
 }
+
 .member-photo img {
 	-webkit-border-radius:50%;
 		-moz-border-radius:50%;
-			border-radius:50%;	
+			border-radius:50%;
+			border: 2px solid #DCDCDC
 }
-
-.team-detail h4 {
-	font-weight: 700;
-}
-
 
 /*===========================
   Portfolio
