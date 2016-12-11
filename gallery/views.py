@@ -4,6 +4,11 @@ from .models import Photo, Album
 
 
 def photo_list():
+    """
+    Функция генерирует из базы 9 случайных фотографий
+    передает их в контекст вместе с альбомом фотографий
+    :return: контекст
+    """
     queryset_photo = Photo.objects.all()
     queryset_album = Album.objects.all()
     if len(list(queryset_photo)) < 9:
