@@ -2,7 +2,7 @@ from django import forms
 
 
 class PasswordResetRequestForm(forms.Form):
-    email_or_username = forms.CharField(label=("Email Or Username"), max_length=254)
+    email_or_username = forms.CharField(label="Email или логин", max_length=254)
 
 
 class SetPasswordForm(forms.Form):
@@ -10,12 +10,14 @@ class SetPasswordForm(forms.Form):
     A form that lets a user change set their password without entering the old
     password
     """
+    MIN_LENGTH = 8
     error_messages = {
-        'password_mismatch': ("The two password fields didn't match."),
+        'password_mismatch': "пароли не совпадают.",
+        'length_mismatch': "Длина пароля должна быть не менее %d символов." % MIN_LENGTH,
         }
-    new_password1 = forms.CharField(label=("New password"),
+    new_password1 = forms.CharField(label="Новый пароль",
                                     widget=forms.PasswordInput)
-    new_password2 = forms.CharField(label=("New password confirmation"),
+    new_password2 = forms.CharField(label="Подтвердите пароль",
                                     widget=forms.PasswordInput)
 
     def clean_new_password2(self):
@@ -27,5 +29,10 @@ class SetPasswordForm(forms.Form):
                     self.error_messages['password_mismatch'],
                     code='password_mismatch',
                     )
+            if len(password2) < self.MIN_LENGTH:
+                raise forms.ValidationError(
+                    self.error_messages['length_mismatch'],
+                    code='length_mismatch',
+                )
         return password2
 

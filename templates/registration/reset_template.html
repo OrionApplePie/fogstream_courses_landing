@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Вход</title>
+	<link rel="stylesheet" href="{% static 'css/styleR.css' %}" media="screen" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+	<link rel="icon" href="http://vladmaxi.net/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="http://vladmaxi.net/favicon.ico" type="image/x-icon">
+</head>
+<body>
+   {% if messages %}
+        <div class="row" >
+          <div class="col-sm-6 col-sm-offset-3">
+        <div class="messages">
+        {% for message in messages %}
+          {% if message.tags  == "success" %}
+            <p class="alert alert-success">{{ message }}</p>
+          {% endif %}
+          {% if message.tags  == "info" %}
+            <p class="alert alert-info">{{ message }}</p>
+          {% endif %}
+          {% if message.tags  == "error" %}
+            <p class="alert alert-danger">{{ message }}</p>
+          {% endif %}
+        {% endfor %}
+        </div>
+        </div>
+        </div>
+   {% endif %}
+  <div id="login">
+  <div class="flip">
+    <div class="form-signup">
+      <h1>Восстановление пароля</h1>
+      <fieldset>
+      {% block content %}
+        <form action="" method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value="OK" />
+        </form>
+      {% endblock %}
+      </fieldset>
+    </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  </div>
+  </div>
+</body>
+</html>

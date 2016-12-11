@@ -1,17 +1,6 @@
-# -*- coding: utf-8 -*-
-from django.contrib import messages
-from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, render_to_response, get_object_or_404
-from django.core.mail import send_mail
 from django.contrib import auth
 from django.utils import timezone
-import hashlib
-import datetime
-import random
-
-from registration.models import UserProfile, UserRegisterConfirm
-from courses.models import Courses
-
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
@@ -22,17 +11,36 @@ from django.template import loader
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-from fc_landing.settings import DEFAULT_FROM_EMAIL
 from django.views.generic import *
-from .forms import PasswordResetRequestForm, SetPasswordForm
+from django.forms.utils import ErrorList
+
 from django.contrib import messages
 from django.contrib.auth.models import User
+
+import hashlib
+import datetime
+import random
+
+from fc_landing.settings import DEFAULT_FROM_EMAIL
+from registration.models import UserProfile, UserRegisterConfirm
+from courses.models import Courses
+from .forms import PasswordResetRequestForm, SetPasswordForm
+
+
+class DivErrorList(ErrorList):
+    def __str__(self):
+        return self.as_divs()
+
+    def as_divs(self):
+        if not self:
+            return ''
+        return '<div class="errorlist">%s</div>' % ''.join(['<div class="error">%s</div>' % e for e in self])
 
 
 class ResetPasswordRequestView(FormView):
     # code for template is given below the view's code
-    template_name = "account/test_template.html"
-    success_url = '/admin/'
+    template_name = "registration/reset_template.html"
+    success_url = '/auth/reset_password/'
     form_class = PasswordResetRequestForm
 
     @staticmethod
@@ -45,10 +53,10 @@ class ResetPasswordRequestView(FormView):
             return False
 
     def reset_password(self, user, request):
-        c = {
+        context = {
             'email': user.email,
             'domain': request.META['HTTP_HOST'],
-            'site_name': 'your site',
+            'site_name': 'Курсы Django от Fogstream',
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'user': user,
             'token': default_token_generator.make_token(user),
@@ -62,22 +70,24 @@ class ResetPasswordRequestView(FormView):
         # copied from
         # django/contrib/admin/templates/registration/password_reset_email.html
         # to templates directory
-        subject = loader.render_to_string(subject_template_name, c)
+        subject = loader.render_to_string(subject_template_name, context)
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
-        email = loader.render_to_string(email_template_name, c)
+        email = loader.render_to_string(email_template_name, context)
         send_mail(subject, email, DEFAULT_FROM_EMAIL,
                   [user.email], fail_silently=False)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, error_class=DivErrorList)
         try:
             if form.is_valid():
                 data = form.cleaned_data["email_or_username"]
             # uses the method written above
             if self.validate_email_address(data) is True:
                 '''
-                If the input is an valid email address, then the following code will lookup for users associated with that email address. If found then an email will be sent to the address, else an error message will be printed on the screen.
+                If the input is an valid email address,
+                then the following code will lookup for users associated with that email address.
+                If found then an email will be sent to the address, else an error message will be printed on the screen.
                 '''
                 associated_users = User.objects.filter(
                     Q(email=data) | Q(username=data))
@@ -87,15 +97,19 @@ class ResetPasswordRequestView(FormView):
 
                     result = self.form_valid(form)
                     messages.success(
-                        request, 'An email has been sent to {0}. Please check its inbox to continue reseting password.'.format(data))
+                        request, 'Письмо отправлено на {0}.'
+                                 ' Пожалуйста проверьте Ваш почтовый ящик для продолжения.'.format(data))
                     return result
                 result = self.form_invalid(form)
                 messages.error(
-                    request, 'No user is associated with this email address')
+                    request, 'Пользователь с таким адресом электронной почты не найден')
                 return result
             else:
                 '''
-                If the input is an username, then the following code will lookup for users associated with that user. If found then an email will be sent to the user's address, else an error message will be printed on the screen.
+                If the input is an username,
+                then the following code will lookup for users associated with that user.
+                If found then an email will be sent to the user's address,
+                else an error message will be printed on the screen.
                 '''
                 associated_users = User.objects.filter(username=data)
                 if associated_users.exists():
@@ -103,21 +117,22 @@ class ResetPasswordRequestView(FormView):
                         self.reset_password(user, request)
                     result = self.form_valid(form)
                     messages.success(
-                        request, "Email has been sent to {0}'s email address. Please check its inbox to continue reseting password.".format(data))
+                        request, "Письмо отправлено на адресс пользователя {0}."
+                                 " Пожалуйста проверьте Ваш почтовый ящик для продолжения".format(data))
                     return result
                 result = self.form_invalid(form)
                 messages.error(
-                    request, 'This username does not exist in the system.')
+                    request, 'Пользователь с таким именем не найден.')
                 return result
-            messages.error(request, 'Invalid Input')
+            messages.error(request, 'Ошибка ввода!')
         except Exception as e:
             print(e)
         return self.form_invalid(form)
 
 
 class PasswordResetConfirmView(FormView):
-    template_name = "account/test_template.html"
-    success_url = '/admin/'
+    template_name = "registration/reset_template.html"
+    success_url = '/auth/login/'
     form_class = SetPasswordForm
 
     def post(self, request, uidb64=None, token=None, *arg, **kwargs):
@@ -126,7 +141,7 @@ class PasswordResetConfirmView(FormView):
         form for entering a new password.
         """
         UserModel = get_user_model()
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, error_class=DivErrorList)
         assert uidb64 is not None and token is not None  # checked by URLconf
         try:
             uid = urlsafe_base64_decode(uidb64)
@@ -139,15 +154,15 @@ class PasswordResetConfirmView(FormView):
                 new_password = form.cleaned_data['new_password2']
                 user.set_password(new_password)
                 user.save()
-                messages.success(request, 'Password has been reset.')
+                messages.success(request, 'Пароль был изменен успешно.')
                 return self.form_valid(form)
             else:
-                messages.error(
-                    request, 'Password reset has not been unsuccessful.')
+                #messages.error(
+                 #   request, 'Произошла ошибка.')
                 return self.form_invalid(form)
         else:
             messages.error(
-                request, 'The reset password link is no longer valid.')
+                request, 'Ссылка сброса пароля не действительна.')
             return self.form_invalid(form)
 
 
