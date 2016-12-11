@@ -4,9 +4,9 @@ from django.http import HttpResponseRedirect
 from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
 from django.core.mail import EmailMessage
 
-from .models import HeadPicture, OurTeam
 
-from .models import Feedback
+
+from .models import Feedback, HeadCarouselPicture, TeamMember
 
 
 class FeedbackModelAdmin(admin.ModelAdmin):
@@ -56,15 +56,14 @@ class FeedbackModelAdmin(admin.ModelAdmin):
             return super(FeedbackModelAdmin, self).response_change(request, obj)
 
 
+class HeadCarouselPictureAdmin(admin.ModelAdmin):
+    list_display = ('title','image', 'image_img', 'priority')
 
 
-class HeadImageAdmin(admin.ModelAdmin):
-    list_display = ('title','image', 'image_img','interval', 'priority')
-
-class OurTeamAdmin(admin.ModelAdmin):
+class TeamMemberAdmin(admin.ModelAdmin):
     list_display = ('name', 'position', 'photo', 'image_img')
 
 
 admin.site.register(Feedback, FeedbackModelAdmin)
-admin.site.register(HeadPicture, HeadImageAdmin)
-admin.site.register(OurTeam, OurTeamAdmin)
+admin.site.register(HeadCarouselPicture, HeadCarouselPictureAdmin)
+admin.site.register(TeamMember, TeamMemberAdmin)

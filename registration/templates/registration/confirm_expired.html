@@ -1,9 +1,16 @@
-
-{% block content %}
 {% load staticfiles %}
-<h1>Ссылка истекла</h1>
-К сожалению, Ваша ссылка истекла. Мы можем попробовать направить Вам новую, если Вы нажмете на кнопочку <br/><br/>
-<form action="/auth/registration/">
-    <input type="submit" value="Кнопочка" />
-</form>
-{% endblock %}
+<html>
+<head>
+    <title> Ссылка истекла </title>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <h1 align="center" style="font-family: 'Lobster'; color: #FFFFE0; background: #4682B4; padding: 3px"> Ссылка истекла</h1>
+    <h3 align="center" style="color: #696969"> К сожалению, Ваша ссылка истекла.
+        <br> Мы можем попробовать направить Вам новую, если Вы нажмете на котика </h3>
+    <form action="/auth/registration/" align="middle">
+        <input type="image" src="{%  static 'img/cat.jpg' %}"  value="Котик" />
+    </form>
+</body>
+</html>

@@ -8,14 +8,14 @@
                         <div class="carousel-inner">
                             <div class="item active">
 								<div class="bannerImage">
-									<a href="#"><img src="{{HeadPictures.0.image.url}}" alt="картинка пропала" width=1400 height=405></a>
+									<a href="#"><img src="{{head_pictures.0.image.url}}" alt="картинка пропала" width=1400 height=405></a>
 								</div>
 								<div class="caption row-fluid">
 									<div class="span4"></div>
 									<div class="span8"></div>
 								</div>
 							</div>
-							{% for pic in HeadPictures %}
+							{% for pic in head_pictures %}
 								{% if pic.priority > 1 %}
                             	<div class="item">
                                     	<div class="bannerImage">

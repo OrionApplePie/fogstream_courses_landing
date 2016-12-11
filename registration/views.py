@@ -14,6 +14,12 @@ from courses.models import Courses
 
 
 def send_registration_email(request):
+    """
+    Функция отправляет на введенный пользователем емейл
+    письмо с ссылкой для подтверждения регистрации.
+    Ссылка генерируется случайно и записывается в activation_key
+    В key_expires записывается дата истечения ключа
+    """
     queryset = Courses.objects.all()
     context = {
         'courses': queryset,
@@ -40,6 +46,14 @@ def send_registration_email(request):
 
 
 def registration_confirm(request, activation_key):
+    """
+    Функция ищет переданный activation_key в таблице. Если есть, происходит проверка
+    по сроку истечения ключа. Если истек - перенаправляет на страницу, с которой
+    пользователь может запросить новую ссылку. Если не истек - появляется форма, где
+    пользователь вводит логин, пароль, подтверждение пароля и курс. Пароль не может
+    быть длиной меньше 8 символов, а также состоять только из букв или только из
+    цифр. После успешной регистрации появляется страница с авторизацией.
+    """
     if request.user.is_authenticated():
         return redirect('/')
     user_reg_confirm = get_object_or_404(UserRegisterConfirm,
@@ -61,7 +75,7 @@ def registration_confirm(request, activation_key):
             email = user_reg_confirm.email
             password = request.POST.get('password', '')
             password_confirm = request.POST.get('password_confirm', '')
-            if password == password_confirm and len(password) >= 8:
+            if password == password_confirm and len(password) >= 8 and password_authentication(password):
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
                 user.save()
@@ -71,7 +85,8 @@ def registration_confirm(request, activation_key):
                 UserRegisterConfirm.objects.filter(activation_key=activation_key).delete()
                 return redirect('/auth/login/')
             else:
-                messages.error(request, u"Пожалуйста, введите совпадающие пароли длиной от 8 символов")
+                messages.error(request, u"Пожалуйста, введите совпадающие пароли длиной от 8 символов. "
+                                        u"Пароль не должен содержать только цифры или только буквы.")
         return render(request, 'registration/registration_continue.html', context)
 
 
@@ -97,14 +112,6 @@ def login(request):
             return render(request, 'registration/login.html', context)
     else:
         return render(request, 'registration/login.html', context)
-
-
-def registration(request):
-    queryset = Courses.objects.all()
-    context = {
-        'courses': queryset,
-    }
-    return render(request, 'registration/registration.html', context)
 
 
 def password_authentication(password):

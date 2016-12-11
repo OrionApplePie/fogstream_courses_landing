@@ -26,7 +26,7 @@ SECRET_KEY = 'd#&c8*psjmo8wm3e9*(pv(ej-2n@@1hx)sol8k&a72*8q!ms#%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CCOUNT_ACTIVATION_DAYS = 2 # кол-во дней для хранения кода активации
+ACCOUNT_ACTIVATION_DAYS = 2
 
 AUTH_USER_EMAIL_UNIQUE = True
 EMAIL_HOST = 'localhost'

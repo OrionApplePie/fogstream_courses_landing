@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.db import models
 from django.core import validators
 
@@ -27,12 +28,23 @@ class Feedback(models.Model):
         return self.name
 
 
-class HeadPicture(models.Model):
-    title = models.CharField(max_length=255, null=True)
-    interval = models.IntegerField(default=5000,null=False)
-    priority = models.IntegerField(primary_key=True, unique=True)
-    image = models.ImageField(upload_to='head/')
+class HeadCarouselPicture(models.Model):
+    """
+    Model for picture in carousel, that at the top of lending
+    Picture in carousel changes by priority
+    """
+    title = models.CharField(max_length=255, null=True, verbose_name='Название')
+    priority = models.IntegerField(primary_key=True, unique=True, verbose_name='Приоритет в карусели')
+    image = models.ImageField(upload_to='head/', verbose_name='Путь')
+
+    class Meta:
+        verbose_name = "Картинка карусели"
+        verbose_name_plural = "Картинки карусели"
+
     def image_img(self):
+        """
+        :return: mini-image for displaying in admin's page
+        """
         if self.image:
             return u'<a href="{0}" target="_blank"><img src="{0}" width="100"/></a>'.format(self.image.url)
         else:
@@ -40,11 +52,22 @@ class HeadPicture(models.Model):
     image_img.allow_tags = True
 
 
-class OurTeam(models.Model):
-    name = models.CharField(max_length=200, null=False)
-    position = models.CharField(max_length=200, null=False)
-    photo = models.ImageField(upload_to='team/')
+class TeamMember(models.Model):
+    """
+    Model for team member.
+    """
+    name = models.CharField(max_length=200, null=False, verbose_name='Имя')
+    position = models.CharField(max_length=200, null=False, verbose_name='Должность')
+    photo = models.ImageField(upload_to='team/', verbose_name='Фото')
+
+    class Meta:
+        verbose_name = "Член команды"
+        verbose_name_plural = "Члены команды"
+
     def image_img(self):
+        """
+        :return: mini-image for displaying in admin's page
+        """
         if self.photo:
             return u'<a href="{0}" target="_blank"><img src="{0}" width="100"/></a>'.format(self.photo.url)
         else:
