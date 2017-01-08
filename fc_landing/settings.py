@@ -28,14 +28,12 @@ DEBUG = True
 
 ACCOUNT_ACTIVATION_DAYS = 2
 
-AUTH_USER_EMAIL_UNIQUE = True
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 2525
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'info@google.ru'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'django.courses@gmail.com'
+EMAIL_HOST_PASSWORD = 'fclanding123'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'django.courses@gmail.com'
 
 # Application definition
 
@@ -91,7 +89,7 @@ WSGI_APPLICATION = 'fc_landing.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'fc_landing',
+        'NAME': 'fc_landing07',
         'USER': 'fc_landing',
         'PASSWORD': 'fc_landing',
         'HOST': 'localhost',
