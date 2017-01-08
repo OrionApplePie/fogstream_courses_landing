@@ -5,7 +5,6 @@ from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
 from django.core.mail import EmailMessage
 
 
-
 from .models import Feedback, HeadCarouselPicture, TeamMember
 
 
@@ -35,10 +34,9 @@ class FeedbackModelAdmin(admin.ModelAdmin):
             contact_name = request.POST.get('name', '')
             contact_mail = request.POST.get('email', '')
             email = EmailMessage(
-                "Курсы Python/Django",
-                obj.answer,
-                "from@example.com",
-                [contact_mail],
+                subject="Курсы Python/Django",
+                body=obj.answer,
+                to=[contact_mail],
                 reply_to=['example@example.ru'],
                 headers={'Reply-To': contact_mail}
             )

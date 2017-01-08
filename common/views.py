@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from common.models import HeadCarouselPicture, TeamMember
 from .forms import FeedbackForm
 from gallery.views import photo_list
-
+from fc_landing.settings import DEFAULT_FROM_EMAIL
 
 
 def index(request):
@@ -34,18 +34,19 @@ def contact(request):
         form = FeedbackForm(data=request.POST)
         if form.is_valid():
             form.save()
-            contact_name = request.POST.get('name', '')
             contact_mail = request.POST.get('email', '')
+
             #TODO  Разные способ передачи именованных аргументов в EmailMessage - с именами и без
             email = EmailMessage(
-                "Курсы Python/Django",
-                "Ваше сообщение отправлено, Спасибо!",
-                "from@example.com",
-                [contact_mail],
-                reply_to=['example@example.ru'],
-                headers={'Reply-To': contact_mail}
+                subject="Курсы Python/Django",
+                body='Ваше сообщение отправлено, Спасибо!',
+                from_email=DEFAULT_FROM_EMAIL,
+                to=[contact_mail],
+                headers={'Reply-To': contact_mail},
+                reply_to=[contact_mail]
             )
             email.send()
+
             data = {
                 'result': 'success',
                 'message': 'Ваше сообщение отправлено!'
@@ -56,9 +57,8 @@ def contact(request):
             for k in form.errors:
                 response[k] = form.errors[k][0]
                 data = {'response': response,
-                    'result': 'error',
-                    'message': 'Form invalid!',
-                    }
+                        'result': 'error',
+                        'message': 'Form invalid!',
+                        }
             return JsonResponse(data)
-    return redirect('/')  # if just go to www.host.com/contact without form
-
+    return redirect('/')
