@@ -52,6 +52,7 @@ class ResetPasswordRequestView(FormView):
         except ValidationError:
             return False
 
+    # may be staticmethod
     def reset_password(self, user, request):
         context = {
             'email': user.email,
@@ -259,7 +260,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return redirect('/')
+            return redirect('/')  # Что за редиректы на строковые урлы??
         else:
             context['login_error'] = "Пользователь не найден"
             return render(request, 'registration/login.html', context)
