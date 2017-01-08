@@ -24,7 +24,7 @@ import random
 from fc_landing.settings import DEFAULT_FROM_EMAIL
 from registration.models import UserProfile, UserRegisterConfirm
 from courses.models import Courses
-from .forms import PasswordResetRequestForm, SetPasswordForm
+from .forms import PasswordResetRequestForm, SetPasswordForm, UserForm
 
 
 class DivErrorList(ErrorList):
@@ -278,6 +278,27 @@ def password_authentication(password):
         return True
     else:
         return False
+
+
+def profile2(request):
+    context = {}
+    user = User.objects.get(pk=auth.get_user(request).pk)
+    if request.POST:
+
+        form = UserForm(data=request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('/auth/profile2/')
+        else:
+            error = 'Введите корректные данные'
+            #form = UserForm(instance=user)
+            context.update({'form': form, 'username': auth.get_user(request).username, 'error': error})
+            return render(request, 'registration/profile2.html', context)
+
+    else:
+        form = UserForm(instance=user)
+        context.update({'form': form, 'username': auth.get_user(request).username, 'pk': auth.get_user(request).pk})
+        return render(request, 'registration/profile2.html', context)
 
 
 def profile(request):

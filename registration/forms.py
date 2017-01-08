@@ -1,4 +1,17 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.core import validators
+
+
+class UserForm(forms.ModelForm):
+    #username = forms.CharField(label='логин')
+    email = forms.EmailField(label='email', validators=[validators.EmailValidator])
+    first_name = forms.CharField(label='Имя', validators=[validators.MaxLengthValidator(32)])
+    last_name = forms.CharField(label='Фамилия', validators=[validators.MaxLengthValidator(32)])
+
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name')
 
 
 class PasswordResetRequestForm(forms.Form):
