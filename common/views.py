@@ -36,6 +36,7 @@ def contact(request):
             form.save()
             contact_name = request.POST.get('name', '')
             contact_mail = request.POST.get('email', '')
+            #TODO  Разные способ передачи именованных аргументов в EmailMessage - с именами и без
             email = EmailMessage(
                 "Курсы Python/Django",
                 "Ваше сообщение отправлено, Спасибо!",

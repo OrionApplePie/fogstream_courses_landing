@@ -19,6 +19,8 @@ class Feedback(models.Model):
     answer = models.TextField(verbose_name='Ответ')
     is_reply = models.BooleanField(default=False, verbose_name='Отвечено')
 
+    # TODO разные стили валидаторов в модели
+
     class Meta:
         ordering = ['-timestamp']
         verbose_name = "Вопрос"
@@ -51,6 +53,8 @@ class HeadCarouselPicture(models.Model):
             return '(Нет изображения)'
     image_img.allow_tags = True
 
+    #TODO  Нет метода __str__
+
 
 class TeamMember(models.Model):
     """
@@ -73,6 +77,8 @@ class TeamMember(models.Model):
         else:
             return '(Нет изображения)'
     image_img.allow_tags = True
+
+    # TODO Нет метода __str__
 
 
 
