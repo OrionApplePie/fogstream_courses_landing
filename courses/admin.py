@@ -3,7 +3,7 @@ from courses.models import Course
 
 
 class CoursesAdmin(admin.ModelAdmin):
-    list_display = ('courses_name_course', 'courses_date_begin', 'courses_date_end')
+    list_display = ('course_name', 'date_begin', 'date_end')
     models = Course
 admin.site.register(Course, CoursesAdmin)
 

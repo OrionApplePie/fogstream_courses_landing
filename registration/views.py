@@ -217,7 +217,7 @@ def registration_confirm(request, activation_key):
     цифр. После успешной регистрации появляется страница с авторизацией.
     """
     if request.user.is_authenticated():
-        return redirect('/')
+        return redirect('index')
     user_reg_confirm = get_object_or_404(UserRegisterConfirm,
                                          activation_key=activation_key)
     print(timezone.now())
@@ -296,7 +296,7 @@ def profile2(request):
         form = UserForm(data=request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('/auth/profile2/')
+            return redirect('profile')
         else:
             error = 'Введите корректные данные'
             context.update({'form': form, 'username': auth.get_user(request).username, 'error': error})
@@ -304,7 +304,7 @@ def profile2(request):
 
     else:
         form = UserForm(instance=user)
-        context.update({'form': form, 'username': auth.get_user(request).username, 'pk': auth.get_user(request).pk})
+        context.update({'form': form, 'username': auth.get_user(request).username })
         return render(request, 'registration/profile2.html', context)
 
 

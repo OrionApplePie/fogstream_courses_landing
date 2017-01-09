@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^login/', login),
     url(r'^logout/', logout),
     url(r'^profile/', profile),
-    url(r'^profile2/', profile2),
+    url(r'^profile2/', profile2, name='profile'),
     url(r'^registration/', send_registration_email),
     url(r'^confirm/(\w+)/', registration_confirm),
 

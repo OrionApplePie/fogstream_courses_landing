@@ -4,7 +4,6 @@ from django.core import validators
 
 
 class UserForm(forms.ModelForm):
-    #username = forms.CharField(label='логин')
     email = forms.EmailField(label='email', validators=[validators.EmailValidator])
     first_name = forms.CharField(label='Имя', validators=[validators.MaxLengthValidator(32)])
     last_name = forms.CharField(label='Фамилия', validators=[validators.MaxLengthValidator(32)])
