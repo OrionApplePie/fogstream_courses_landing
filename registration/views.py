@@ -180,22 +180,30 @@ def send_registration_email(request):
     }
     if request.POST:
         email = request.POST.get('email', '')
-        if User.objects.filter(email=email).exists():
-            messages.error(request, u'Введенный электронный адрес уже занят')
         if email:
-            arg = str(random.random()).encode('utf-8')
-            salt = hashlib.sha1(arg).hexdigest()[:5]
-            arg = str(salt + email).encode('utf-8')
-            activation_key = hashlib.sha1(arg).hexdigest()
-            key_expires = datetime.datetime.today() + datetime.timedelta(2)
-            user_reg_confirm = UserRegisterConfirm(email=email, activation_key=activation_key,
-                                                   key_expires=key_expires)
-            user_reg_confirm.save()
-            subject = u"Fogstream courses Подтверждение регистрации"
-            message = u"Спасибо за регистрацию! Ссылка для подтверждения: " \
-                      "http://127.0.0.1:8000/auth/confirm/{0}".format(activation_key)
-            send_mail(subject, message, 'myemail@example.com', (email,), fail_silently=False)
-            return render_to_response('registration/confirm_sending.html')
+
+            if User.objects.filter(email=email).exists():
+                messages.error(request, u'Введенный электронный адрес уже занят')
+                context.update({'massages': messages})
+                return render(request, 'registration/registration.html', context)
+            else:
+                arg = str(random.random()).encode('utf-8')
+                salt = hashlib.sha1(arg).hexdigest()[:5]
+                arg = str(salt + email).encode('utf-8')
+                activation_key = hashlib.sha1(arg).hexdigest()
+                key_expires = datetime.datetime.today() + datetime.timedelta(2)
+                user_reg_confirm = UserRegisterConfirm(email=email, activation_key=activation_key,
+                                                       key_expires=key_expires)
+                user_reg_confirm.save()
+                subject = u"Fogstream courses Подтверждение регистрации"
+                message = u"Спасибо за регистрацию! Ссылка для подтверждения: " \
+                          "http://127.0.0.1:8000/auth/confirm/{0}".format(activation_key)
+                send_mail(subject, message, 'myemail@example.com', (email,), fail_silently=False)
+                return render_to_response('registration/confirm_sending.html')
+        else:
+            messages.error(request, 'Введите email!')
+            context.update({'massages': messages})
+            return render(request, 'registration/registration.html', context)
     return render(request, 'registration/registration.html', context)
 
 
