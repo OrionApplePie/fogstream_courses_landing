@@ -23,7 +23,7 @@ import random
 
 from fc_landing.settings import DEFAULT_FROM_EMAIL
 from registration.models import UserProfile, UserRegisterConfirm
-from courses.models import Courses
+from courses.models import Course
 from .forms import PasswordResetRequestForm, SetPasswordForm, UserForm
 
 
@@ -174,7 +174,7 @@ def send_registration_email(request):
     Ссылка генерируется случайно и записывается в activation_key
     В key_expires записывается дата истечения ключа
     """
-    queryset = Courses.objects.all()
+    queryset = Course.objects.all()
     context = {
         'courses': queryset,
     }
@@ -225,7 +225,7 @@ def registration_confirm(request, activation_key):
     if user_reg_confirm.key_expires < timezone.now():
         return render_to_response('registration/confirm_expired.html')
     else:
-        queryset = Courses.objects.all()
+        queryset = Course.objects.all()
         context = {
             'courses': queryset,
         }
@@ -257,7 +257,7 @@ def login(request):
     Функция авторизации пользователя
 
     """
-    queryset = Courses.objects.all()
+    queryset = Course.objects.all()
     context = {
         'courses': queryset,
         'auth': auth.get_user(request)

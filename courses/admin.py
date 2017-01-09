@@ -1,11 +1,11 @@
 from django.contrib import admin
-from courses.models import Courses
+from courses.models import Course
 
 
 class CoursesAdmin(admin.ModelAdmin):
     list_display = ('courses_name_course', 'courses_date_begin', 'courses_date_end')
-    models = Courses
-admin.site.register(Courses, CoursesAdmin)
+    models = Course
+admin.site.register(Course, CoursesAdmin)
 
 
 
