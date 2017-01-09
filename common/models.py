@@ -50,6 +50,9 @@ class HeadCarouselPicture(models.Model):
             return '(Нет изображения)'
     image_img.allow_tags = True
 
+    def __str__(self):
+        return self.title
+
     #TODO  Нет метода __str__
 
 
@@ -74,6 +77,9 @@ class TeamMember(models.Model):
         else:
             return '(Нет изображения)'
     image_img.allow_tags = True
+
+    def __str__(self):
+        return self.name
 
     # TODO Нет метода __str__
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from django.contrib import auth
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from common.models import HeadCarouselPicture, TeamMember
 from .forms import FeedbackForm
@@ -61,4 +61,4 @@ def contact(request):
                         'message': 'Form invalid!',
                         }
             return JsonResponse(data)
-    return redirect('/')
+    return redirect('index')

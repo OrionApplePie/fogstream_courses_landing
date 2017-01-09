@@ -268,7 +268,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return redirect('/')  # Что за редиректы на строковые урлы??
+            return redirect('index')  # Что за редиректы на строковые урлы??
         else:
             context['login_error'] = "Пользователь не найден"
             return render(request, 'registration/login.html', context)
@@ -299,7 +299,6 @@ def profile2(request):
             return redirect('/auth/profile2/')
         else:
             error = 'Введите корректные данные'
-            #form = UserForm(instance=user)
             context.update({'form': form, 'username': auth.get_user(request).username, 'error': error})
             return render(request, 'registration/profile2.html', context)
 
@@ -369,4 +368,4 @@ def logout(request):
 
     """
     auth.logout(request)
-    return redirect('/')
+    return redirect('index')
