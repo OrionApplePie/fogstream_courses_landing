@@ -24,7 +24,7 @@ import random
 from fc_landing.settings import DEFAULT_FROM_EMAIL
 from registration.models import UserProfile, UserRegisterConfirm
 from courses.models import Course
-from .forms import PasswordResetRequestForm, SetPasswordForm, UserForm
+from .forms import PasswordResetRequestForm, SetPasswordForm, UserForm, ChangePassword
 
 
 class DivErrorList(ErrorList):
@@ -291,20 +291,37 @@ def password_authentication(password):
 def profile2(request):
     context = {}
     user = User.objects.get(pk=auth.get_user(request).pk)
-    if request.POST:
+    form = UserForm(data=request.POST, instance=user)
+    formPass = ChangePassword(data=request.POST)
 
-        form = UserForm(data=request.POST, instance=user)
+    if 'button1' in request.POST:
+
         if form.is_valid():
             form.save()
             return redirect('profile')
         else:
             error = 'Введите корректные данные'
-            context.update({'form': form, 'username': auth.get_user(request).username, 'error': error})
+            context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username, 'error': error})
+            return render(request, 'registration/profile2.html', context)
+
+    elif 'button2' in request.POST:
+
+        if formPass.is_valid():
+            if user.check_password(formPass.cleaned_data['old_password']) and \
+                            formPass.cleaned_data['password1'] == formPass.cleaned_data['password2']:
+                user.set_password(formPass.cleaned_data['password1'])
+                user.save()
+                auth.login(request, user)
+
+            return redirect('profile')
+        else:
+            error = 'Введите корректные данные'
+            context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username, 'error': error})
             return render(request, 'registration/profile2.html', context)
 
     else:
         form = UserForm(instance=user)
-        context.update({'form': form, 'username': auth.get_user(request).username })
+        context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username })
         return render(request, 'registration/profile2.html', context)
 
 

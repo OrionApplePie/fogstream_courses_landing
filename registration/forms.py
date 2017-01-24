@@ -10,7 +10,13 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('email', 'first_name', 'last_name',)
+
+
+class ChangePassword(forms.Form):
+        old_password = forms.CharField(label='Новый пароль')
+        password1 = forms.CharField(label='Новый пароль')
+        password2 = forms.CharField(label='повтор пароля')
 
 
 class PasswordResetRequestForm(forms.Form):

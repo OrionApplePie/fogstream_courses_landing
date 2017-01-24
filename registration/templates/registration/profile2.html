@@ -64,23 +64,44 @@
     <!-- NAVBAR CODE END -->
 
 
-    <p>Здравствуйте, {{ username }}!</p><br>
-
     <div class="container">
         <section style="padding-bottom: 50px; padding-top: 50px;">
+
             <form  novalidate id="profile" action="/auth/profile2/"  name="profile" method="post" role="form" class="">
-								{{ form.non_field_errors }}
-                                {{ error }}
-								{% for field in form %}
-								<div class="form-group">
-								   {{ field.label_tag }} {{ field }}
-                                    {{ field.errors }}
-									<div class="validation"></div>
-							  </div>
-								{% endfor %}
-								{% csrf_token %}
-							  <button type="submit" class="btn btn-theme pull-left">Сохранить</button>
-							</form>
+            <div class="row">
+                <div class="col-md-4">
+                    <br/>
+                           {{ form.non_field_errors }}
+                                                 {{ error }}
+                           {% for field in form %}
+                           <div class="form-group">
+                              {{ field.label_tag }} {{ field }}
+                                                     {{ field.errors }}
+                              <div class="validation"></div>
+                          </div>
+                           {% endfor %}
+                           {% csrf_token %}
+                          <button type="submit" class="btn btn-theme pull-left" name="button1">Сохранить</button>
+                        <!--<input type="submit" class="btn btn-success" value="Сохранить изменения">-->
+                </div>
+
+                 <div class="col-md-4">
+                    <br/>
+
+                           {% for field in formPass %}
+                           <div class="form-group">
+                              {{ field.label_tag }} {{ field }}
+                                                     {{ field.errors }}
+                              <div class="validation"></div>
+                          </div>
+                           {% endfor %}
+                           {% csrf_token %}
+                          <button type="submit" class="btn btn-theme pull-left" name="button2">Сохранить</button>
+                        <!--<input type="submit" class="btn btn-success" value="Сохранить изменения">-->
+                </div>
+            </div>
+            <!-- ROW END -->
+            </form>
         <br/>
         </section>
 
