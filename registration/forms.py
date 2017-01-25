@@ -14,9 +14,9 @@ class UserForm(forms.ModelForm):
 
 
 class ChangePassword(forms.Form):
-        old_password = forms.CharField(label='Новый пароль')
+        old_password = forms.CharField(label='Старый пароль')
         password1 = forms.CharField(label='Новый пароль')
-        password2 = forms.CharField(label='повтор пароля')
+        password2 = forms.CharField(label='Повтор пароля')
 
 
 class PasswordResetRequestForm(forms.Form):

@@ -10,9 +10,9 @@
         <![endif]-->
     <title>Личный кабинет</title>
     <!-- BOOTSTRAP STYLE SHEET -->
-    <link href="{% static 'css/bootstrapP.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/bootstrap_profile.css' %}" rel="stylesheet" />
     <!-- FONT-AWESOME STYLE SHEET FOR BEAUTIFUL ICONS -->
-    <link href="{% static 'css/font-awesomeP.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/font-awesome_profile.css' %}" rel="stylesheet" />
      <!-- CUSTOM STYLE CSS -->
     <style type="text/css">
                .btn-social {
@@ -66,42 +66,50 @@
 
     <div class="container">
         <section style="padding-bottom: 50px; padding-top: 50px;">
-            <form action="profile" method="post">{% csrf_token %}
+
+            <form  novalidate id="profile" action="/auth/profile2/"  name="profile" method="post" role="form" class="">
             <div class="row">
                 <div class="col-md-4">
                     <br/>
-                        <label>Логин</label>
-                        <input type="text" name = "login" class="form-control" >
-                        <label>Фамилия</label>
-                        <input type="text" name = "first_name" class="form-control" >
-                        <label>Имя</label>
-                        <input type="text" name = "last_name" class="form-control">
-                        <label>Email</label>
-                        <input type="text" name="email" class="form-control" >
-                        <!--<label>Телефон</label>
-                        <input type="text" class="form-control" placeholder="{{ person.party_phone }}"> -->
+                           {{ form.non_field_errors }}
+                                                 {{ error }}
+                           {% for field in form %}
+                           <div class="form-group">
+                               <div>
+                              {{ field.label_tag }}
+                               </div>
+                               {{ field }}
+                               {{ field.errors }}
+                              <div class="validation"></div>
+                           </div>
+                           {% endfor %}
+                           {% csrf_token %}
+                          <button type="submit" class="btn btn-theme pull-left" name="button1">Сохранить</button>
                         <!--<input type="submit" class="btn btn-success" value="Сохранить изменения">-->
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group col-md-8">
-                            <h3>Изменить пароль</h3>
 
-                            <label>Введите старый пароль</label>
-                            <input type="password" name="old_password" class="form-control">
-                            <label>Введите новый пароль</label>
-                            <input type="password" name="password1" class="form-control">
-                            <label>Введите новый пароль еще раз</label>
-                            <input type="password" name="password2" class="form-control" />
+                 <div class="col-md-4">
+                    <br/>
+
+                           {% for field in formPass %}
+                           <div class="form-group">
+                              <div>
+                                  {{ field.label_tag }}
+                              </div>
+                               {{ field }}
+                               <div class="validation"></div>
+                          </div>
+
+                           {% endfor %}
+                           {{ err }}
                             <br>
-                            <input type="submit" class="btn btn-warning" value="Сохранить">
-                    </div>
+                           {% csrf_token %}
+                          <button type="submit" class="btn btn-theme pull-left" name="button2">Сохранить</button>
+                        <!--<input type="submit" class="btn btn-success" value="Сохранить изменения">-->
                 </div>
             </div>
             <!-- ROW END -->
             </form>
-            {% if error %}
-                <div class="bg-info"> {{ error}} </div>
-            {% endif %}
         <br/>
         </section>
 
@@ -114,7 +122,7 @@
     <script src="{% static 'js/jquery-1.11.1P.js' %}"></script>
     <!-- REQUIRED BOOTSTRAP SCRIPTS -->
 {#    Что значит буква P в названии bootstrapP ?#}
-    <script src="{% static 'js/bootstrapP.js' %}"></script>
+    <script src="{% static 'js/bootstrap_profile.js' %}"></script>
 </body>
 
 </html>

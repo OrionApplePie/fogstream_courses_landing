@@ -2,15 +2,14 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 
-from registration.views import login, profile, profile2, logout, send_registration_email, registration_confirm
+from registration.views import login, profile, logout, send_registration_email, registration_confirm
 from .views import ResetPasswordRequestView, PasswordResetConfirmView
 
 
 urlpatterns = [
     url(r'^login/', login),
     url(r'^logout/', logout),
-    url(r'^profile/', profile),
-    url(r'^profile2/', profile2, name='profile'),
+    url(r'^profile/', profile, name='profile'),
     url(r'^registration/', send_registration_email),
     url(r'^confirm/(\w+)/', registration_confirm),
 

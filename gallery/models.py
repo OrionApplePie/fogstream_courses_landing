@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Album(models.Model):
-    title = models.CharField(max_length=100, verbose_name='Название')
-    slug = models.SlugField(max_length=100, unique=True, verbose_name='Описание')
+    title = models.CharField(max_length=100, unique=True, verbose_name='Название')
+    slug = models.CharField(max_length=100, verbose_name='Описание')
 
     class Meta:
         ordering = ['title']

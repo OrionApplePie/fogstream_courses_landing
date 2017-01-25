@@ -288,7 +288,7 @@ def password_authentication(password):
         return False
 
 
-def profile2(request):
+def profile(request):
     context = {}
     user = User.objects.get(pk=auth.get_user(request).pk)
     form = UserForm(data=request.POST, instance=user)
@@ -302,79 +302,31 @@ def profile2(request):
         else:
             error = 'Введите корректные данные'
             context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username, 'error': error})
-            return render(request, 'registration/profile2.html', context)
+            return render(request, 'registration/profile.html', context)
 
     elif 'button2' in request.POST:
-
+        context['err'] = 'hghg'
         if formPass.is_valid():
+            if formPass.cleaned_data['password1'] != formPass.cleaned_data['password2']:
+                context['err'] = 'Пароли не совпвдвют'
+            if not user.check_password(formPass.cleaned_data['old_password']):
+                context['err'] = 'Старый пароль неверный'
             if user.check_password(formPass.cleaned_data['old_password']) and \
                             formPass.cleaned_data['password1'] == formPass.cleaned_data['password2']:
                 user.set_password(formPass.cleaned_data['password1'])
                 user.save()
                 auth.login(request, user)
-
-            return redirect('profile')
+                return redirect('profile')
+            context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username})
+            return render(request, 'registration/profile.html', context)
         else:
             error = 'Введите корректные данные'
             context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username, 'error': error})
-            return render(request, 'registration/profile2.html', context)
+            return render(request, 'registration/profile.html', context)
 
     else:
         form = UserForm(instance=user)
         context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username })
-        return render(request, 'registration/profile2.html', context)
-
-
-def profile(request):
-    """
-    Функция изменения данныхв личном кабинете
-
-    """
-    fail = False
-    context = {
-        'auth': auth.get_user(request),
-        'error': '',
-    }
-    if request.POST:
-        user = auth.get_user(request)
-        first_name = request.POST.get('first_name', '')
-        last_name = request.POST.get('last_name', '')
-        email = request.POST.get('email', '')
-        old_password = request.POST.get('old_password', '')
-        password1 = request.POST.get('password1', '')
-        password2 = request.POST.get('password2', '')
-        username = request.POST.get('login', '')
-        if username:
-            user.username = username
-        if first_name:
-            user.first_name = first_name
-        if last_name:
-            user.last_name = last_name
-        if email:
-            user.email = email
-        if old_password and password1 and password2:
-            if not user.check_password(old_password):
-                fail = True
-                context['error'] = 'Старый пароль неверный'
-
-            if password1 != password2:
-                fail = True
-                context['error'] = 'Новые пароли не совпадают'
-            if len(password2) < 8:
-                fail = True
-                context['error'] = 'Пароль должен состоять из восьми и более символов'
-            if password_authentication(password1) == False:
-                fail = True
-                context['error'] = 'Пароль должен состоять из цифр и букв'
-            if user.check_password(old_password) and password1 == password2 and len(
-                    password2) >= 8 and password_authentication(password1):
-                user.set_password(password1)
-                auth.login(request, user)
-        user.save()
-        if not fail:
-            context['error'] = 'Сохранено'
-        return render(request, 'registration/profile.html', context)
-    else:
         return render(request, 'registration/profile.html', context)
 
 
