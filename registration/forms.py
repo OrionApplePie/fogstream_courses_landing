@@ -4,9 +4,9 @@ from django.core import validators
 
 
 class UserForm(forms.ModelForm):
-    email = forms.EmailField(label='email', validators=[validators.EmailValidator])
-    first_name = forms.CharField(label='Имя', validators=[validators.MaxLengthValidator(32)])
-    last_name = forms.CharField(label='Фамилия', validators=[validators.MaxLengthValidator(32)])
+    email = forms.EmailField(label='email', widget=forms.TextInput(attrs={'class': 'special'}), validators=[validators.EmailValidator])
+    first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={'class': 'special'}), validators=[validators.MaxLengthValidator(32)])
+    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={'class': 'special'}), validators=[validators.MaxLengthValidator(32)])
 
     class Meta:
         model = User
@@ -14,11 +14,11 @@ class UserForm(forms.ModelForm):
 
 
 class ChangePassword(forms.Form):
-        old_password = forms.CharField(label='Старый пароль', widget=forms.PasswordInput,
+        old_password = forms.CharField(label='Старый пароль', widget=forms.PasswordInput(attrs={'class': 'special'}),
                                        validators=[validators.MinLengthValidator(8)])
-        password1 = forms.CharField(label='Новый пароль', widget=forms.PasswordInput,
+        password1 = forms.CharField(label='Новый пароль', widget=forms.PasswordInput(attrs={'class': 'special'}),
                                     validators=[validators.MinLengthValidator(8)])
-        password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput,
+        password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'special'}),
                                     validators=[validators.MinLengthValidator(8)])
 
 

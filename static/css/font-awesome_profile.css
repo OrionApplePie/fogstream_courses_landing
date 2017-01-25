@@ -1689,3 +1689,7 @@ div #notice
     margin-left: 40%;
     font-size: 17px;
 }
+
+.special {
+    width: 100%;
+}
