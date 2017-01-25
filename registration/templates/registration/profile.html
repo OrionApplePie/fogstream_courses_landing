@@ -53,6 +53,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/">Назад</a>
+            </div><span class="pull-right">Вы вошли как <strong>{{ username }}</strong> <br>
+            <a href="/auth/logout/">Выйти</a></span>
             </div>
            <!-- <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav ">
@@ -65,14 +67,27 @@
 
 
     <div class="container">
+          <div class="container">
+            <div class="messages">
+            {% for message in messages %}
+            {% if message.tags  == "success" %}
+                <p class="alert alert-success">{{ message }}</p>
+            {% endif %}
+            {% if message.tags  == "info" %}
+                <p class="alert alert-info">{{ message }}</p>
+            {% endif %}
+            {% if message.tags  == "error" %}
+                <p class="alert alert-danger">{{ message }}</p>
+            {% endif %}
+            {% endfor %}
+            </div>
         <section style="padding-bottom: 50px; padding-top: 50px;">
 
-            <form  novalidate id="profile" action="/auth/profile2/"  name="profile" method="post" role="form" class="">
+            <form  novalidate id="profile" action="/auth/profile/"  name="profile" method="post" role="form" class="">
             <div class="row">
                 <div class="col-md-4">
                     <br/>
                            {{ form.non_field_errors }}
-                                                 {{ error }}
                            {% for field in form %}
                            <div class="form-group">
                                <div>
@@ -87,10 +102,8 @@
                           <button type="submit" class="btn btn-theme pull-left" name="button1">Сохранить</button>
                         <!--<input type="submit" class="btn btn-success" value="Сохранить изменения">-->
                 </div>
-
                  <div class="col-md-4">
                     <br/>
-
                            {% for field in formPass %}
                            <div class="form-group">
                               <div>
@@ -99,9 +112,7 @@
                                {{ field }}
                                <div class="validation"></div>
                           </div>
-
                            {% endfor %}
-                           {{ err }}
                             <br>
                            {% csrf_token %}
                           <button type="submit" class="btn btn-theme pull-left" name="button2">Сохранить</button>

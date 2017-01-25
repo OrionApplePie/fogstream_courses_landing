@@ -298,35 +298,36 @@ def profile(request):
 
         if form.is_valid():
             form.save()
+            messages.success(request, u"Изменения сохранены успешно")
             return redirect('profile')
         else:
-            error = 'Введите корректные данные'
-            context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username, 'error': error})
+            messages.error(request, u"Пожалуйста, введите Введите корректные данные")
+            context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username})
             return render(request, 'registration/profile.html', context)
 
     elif 'button2' in request.POST:
-        context['err'] = 'hghg'
         if formPass.is_valid():
             if formPass.cleaned_data['password1'] != formPass.cleaned_data['password2']:
-                context['err'] = 'Пароли не совпвдвют'
+                messages.error(request, u"Пожалуйста, введите совпадающие пароли длиной от 8 символов. ")
             if not user.check_password(formPass.cleaned_data['old_password']):
-                context['err'] = 'Старый пароль неверный'
+                messages.error(request, u"Текущий пароль не верен")
             if user.check_password(formPass.cleaned_data['old_password']) and \
                             formPass.cleaned_data['password1'] == formPass.cleaned_data['password2']:
                 user.set_password(formPass.cleaned_data['password1'])
                 user.save()
                 auth.login(request, user)
+                messages.success(request, u"Пароль изменен успешно")
                 return redirect('profile')
             context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username})
             return render(request, 'registration/profile.html', context)
         else:
-            error = 'Введите корректные данные'
-            context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username, 'error': error})
+            messages.error(request, u"Пожалуйста, введите совпадающие пароли длиной от 8 символов. ")
+            context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username})
             return render(request, 'registration/profile.html', context)
 
     else:
         form = UserForm(instance=user)
-        context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username })
+        context.update({'form': form, 'formPass': formPass, 'username': auth.get_user(request).username})
         return render(request, 'registration/profile.html', context)
 
 
