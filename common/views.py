@@ -5,7 +5,7 @@ from django.http import JsonResponse, HttpResponse
 
 from common.models import HeadCarouselPicture, TeamMember
 from .forms import FeedbackForm
-from gallery.views import photo_list
+from gallery.views import random_photos_list
 from fc_landing.settings import DEFAULT_FROM_EMAIL
 
 
@@ -21,7 +21,7 @@ def index(request):
     form = FeedbackForm()
 
     context.update({'form': form, 'username': auth.get_user(request).username})
-    context.update(photo_list())
+    context.update(random_photos_list())
     return render(request, 'index.html', context)
 
 

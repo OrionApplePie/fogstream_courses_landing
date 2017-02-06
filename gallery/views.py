@@ -3,7 +3,7 @@ import random
 from .models import Photo, Album
 
 
-def photo_list():
+def random_photos_list():
     """
     Функция генерирует из базы 9 случайных фотографий
     передает их в контекст вместе с альбомом фотографий
