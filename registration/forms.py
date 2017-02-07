@@ -35,10 +35,11 @@ class SetPasswordForm(forms.Form):
     error_messages = {
         'password_mismatch': "пароли не совпадают.",
         'length_mismatch': "Длина пароля должна быть не менее %d символов." % MIN_LENGTH,
+        'empty_field': "введите совпадающие непустые пароли"
         }
-    new_password1 = forms.CharField(label="Новый пароль",
+    new_password1 = forms.CharField(label="Новый пароль", required=False,
                                     widget=forms.PasswordInput)
-    new_password2 = forms.CharField(label="Подтвердите пароль",
+    new_password2 = forms.CharField(label="Подтвердите пароль", required=False,
                                     widget=forms.PasswordInput)
 
     def clean_new_password2(self):
@@ -50,10 +51,15 @@ class SetPasswordForm(forms.Form):
                     self.error_messages['password_mismatch'],
                     code='password_mismatch',
                     )
-            if len(password2) < self.MIN_LENGTH:
+            elif len(password2) < self.MIN_LENGTH:
                 raise forms.ValidationError(
                     self.error_messages['length_mismatch'],
                     code='length_mismatch',
                 )
-        return password2
+            return password2
+        else:
+            raise forms.ValidationError(
+                self.error_messages['empty_field'],
+                code='empty_field',
+            )
 
